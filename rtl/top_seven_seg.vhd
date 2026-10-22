@@ -1,23 +1,3 @@
-----------------------------------------------------------------------------------
--- Company/University: FPGA Spartan 6 Nexys 3 Lab Portfolio
--- Engineer:           MSc. Erick Poppe
--- 
--- Create Date:        October 21, 2026
--- Design Name:        Top Seven Segment
--- Module Name:        Top Seven Segment- rtl
--- Project Name:       Top Seven Segment
--- Target Devices:     Xilinx Spartan-6 XC6SLX16-CS324 (Digilent Nexys 3)
--- Tool Versions:      Xilinx ISE WebPACK 14.7 (Linux/Ubuntu)
--- 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
---     Revision 1.0 - Clean, debounced clock-multiplexed framework functional.
--- 
-----------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -53,8 +33,8 @@ begin
                 time_data       <= time_data + 1; -- Increment display counter
             else
                 one_sec_counter <= one_sec_counter + 1;
-            end
-        end if;
+            end if; -- <--- Fixed: Added missing end if for the inner loop
+        end if; -- <--- Fixed: Added missing end if for the clock loop
     end process;
 
     -- Increment refresh counter constantly to scan through digits
@@ -116,4 +96,3 @@ begin
     end process;
 
 end Behavioral;
-

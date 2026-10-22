@@ -1,0 +1,7 @@
+xst -intstyle ise -ifn "/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment/top_seven_seg.xst" -ofn "/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment/top_seven_seg.syr" 
+xst -intstyle ise -ifn "/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment/top_seven_seg.xst" -ofn "/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment/top_seven_seg.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc /home/erick/Documents/Top-Seven-Segment-in-Nexys-3/constraints/nexys3.ucf -p xc6slx16-csg324-3 top_seven_seg.ngc top_seven_seg.ngd  
+map -intstyle ise -p xc6slx16-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o top_seven_seg_map.ncd top_seven_seg.ngd top_seven_seg.pcf 
+par -w -intstyle ise -ol high -mt off top_seven_seg_map.ncd top_seven_seg.ncd top_seven_seg.pcf 
+trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml top_seven_seg.twx top_seven_seg.ncd -o top_seven_seg.twr top_seven_seg.pcf 
+bitgen -intstyle ise -f top_seven_seg.ut top_seven_seg.ncd 

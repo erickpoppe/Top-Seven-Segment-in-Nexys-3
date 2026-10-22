@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment/top_seven_seg.ncd
+OUTFILE=/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment/top_seven_seg.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=/home/erick/Documents/Top-Seven-Segment-in-Nexys-3/Top-Seven-Segment-Spartan-6/Top-Seven-Segment
+LICENSE=WebPack
+USER_INFO=214209114_0_0_135
