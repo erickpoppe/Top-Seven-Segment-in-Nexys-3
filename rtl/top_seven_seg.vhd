@@ -1,3 +1,28 @@
+----------------------------------------------------------------------------------
+-- Company/University: FPGA Spartan 6  Lab Portfolio
+-- Engineer:           Erick Poppe
+-- 
+-- Create Date:        October 21, 2026
+-- Design Name:        top_seven_seg
+-- Module Name:        top_seven_seg - Behavioral
+-- Project Name:       Adaptive Video Clocking & Dynamic Diagnostics
+-- Target Devices:     Xilinx Spartan-6 XC6SLX16-3CSG324C (Digilent Nexys 3)
+-- Tool Versions:      Xilinx ISE WebPACK 14.7 (Linux/Ubuntu)
+-- 
+-- Description: 
+--     Multiplexed 4-digit 7-segment display driver implementing a 1-second 
+--     hexadecimal counter. Uses a 27-bit prescaling clock divider to drive 
+--     the timer logic from the onboard 100MHz clock and a 17-bit refresh 
+--     counter to continuously scan the anodes, bypassing persistence of vision 
+--     limits. Includes asynchronous reset capabilities mapping directly to SW0.
+-- 
+-- Dependencies: 
+--     IEEE.STD_LOGIC_1164.ALL, IEEE.NUMERIC_STD.ALL
+-- 
+-- Revision:
+--     Revision 1.0 - Clean, structurally sound 7-segment multiplexer functional.
+-- 
+--------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
