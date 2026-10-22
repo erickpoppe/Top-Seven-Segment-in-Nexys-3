@@ -97,27 +97,87 @@ begin
     end process;
 
     -- 3. Hex-to-7-Segment Decoder (Active LOW segments: CA CB CC CD CE CF CG DP)
+--    process(hex_digit)
+--    begin
+--        case hex_digit is
+--            when x"0" => seg <= "00000011"; -- 0
+--            when x"1" => seg <= "10011111"; -- 1
+--            when x"2" => seg <= "00100101"; -- 2
+--            when x"3" => seg <= "00001101"; -- 3
+--            when x"4" => seg <= "10011001"; -- 4
+--            when x"5" => seg <= "01001001"; -- 5
+--            when x"6" => seg <= "01000001"; -- 6
+--            when x"7" => seg <= "00011111"; -- 7
+--            when x"8" => seg <= "00000001"; -- 8
+--            when x"9" => seg <= "00001101"; -- 9
+--            when x"A" => seg <= "00010001"; -- A
+--            when x"B" => seg <= "11000001"; -- b
+--            when x"C" => seg <= "01100011"; -- C
+--            when x"D" => seg <= "10000101"; -- d
+--            when x"E" => seg <= "01100001"; -- E
+--            when x"F" => seg <= "01110001"; -- F
+--            when others => seg <= "11111111";
+--        end case;
+--    end process;
+
+    -- 3. Corrected Hex-to-7-Segment Decoder (Active LOW segments: CA CB CC CD CE CF CG DP)
+    -- Bit layout inside string: "CA CB CC CD CE CF CG DP"
+--    process(hex_digit)
+--    begin
+--        case hex_digit is
+--            when x"0" => seg <= "00000011"; -- 0 (CA-CF on, CG/DP off)
+--            when x"1" => seg <= "10011111"; -- 1 (CB, CC on)
+--            when x"2" => seg <= "00100101"; -- 2
+--            when x"3" => seg <= "00001101"; -- 3
+--            when x"4" => seg <= "10011001"; -- 4
+--            when x"5" => seg <= "01001001"; -- 5
+--            when x"6" => seg <= "01000001"; -- 6
+--            when x"7" => seg <= "00011111"; -- 7
+--            when x"8" => seg <= "00000001"; -- 8
+--            when x"9" => seg <= "00001101"; -- 9
+--            when x"A" => seg <= "00010001"; -- A
+--            when x"B" => seg <= "11000001"; -- b
+--            when x"C" => seg <= "01100011"; -- C
+--            when x"D" => seg <= "10000101"; -- d
+--            when x"E" => seg <= "01100001"; -- E
+--            when x"F" => seg <= "01110001"; -- F
+--            when others => seg <= "11111111"; -- All segments off
+--        end case;
+--    end process;    -- 3. Explicit Segment Mapping Block
     process(hex_digit)
+        -- Intermediate signals for easy debugging (0 = ON, 1 = OFF)
+        variable ca_s, cb_s, cc_s, cd_s, ce_s, cf_s, cg_s, dp_s : std_logic;
     begin
         case hex_digit is
-            when x"0" => seg <= "00000011"; -- 0
-            when x"1" => seg <= "10011111"; -- 1
-            when x"2" => seg <= "00100101"; -- 2
-            when x"3" => seg <= "00001101"; -- 3
-            when x"4" => seg <= "10011001"; -- 4
-            when x"5" => seg <= "01001001"; -- 5
-            when x"6" => seg <= "01000001"; -- 6
-            when x"7" => seg <= "00011111"; -- 7
-            when x"8" => seg <= "00000001"; -- 8
-            when x"9" => seg <= "00001101"; -- 9
-            when x"A" => seg <= "00010001"; -- A
-            when x"B" => seg <= "11000001"; -- b
-            when x"C" => seg <= "01100011"; -- C
-            when x"D" => seg <= "10000101"; -- d
-            when x"E" => seg <= "01100001"; -- E
-            when x"F" => seg <= "01110001"; -- F
-            when others => seg <= "11111111";
+            --               CA  CB  CC  CD  CE  CF  CG  DP
+            when x"0" =>    ca_s:='0'; cb_s:='0'; cc_s:='0'; cd_s:='0'; ce_s:='0'; cf_s:='0'; cg_s:='1'; dp_s:='1';
+            when x"1" =>    ca_s:='1'; cb_s:='0'; cc_s:='0'; cd_s:='1'; ce_s:='1'; cf_s:='1'; cg_s:='1'; dp_s:='1';
+            when x"2" =>    ca_s:='0'; cb_s:='0'; cc_s:='1'; cd_s:='0'; ce_s:='0'; cf_s:='1'; cg_s:='0'; dp_s:='1';
+            when x"3" =>    ca_s:='0'; cb_s:='0'; cc_s:='0'; cd_s:='0'; ce_s:='1'; cf_s:='1'; cg_s:='0'; dp_s:='1';
+            when x"4" =>    ca_s:='1'; cb_s:='0'; cc_s:='0'; cd_s:='1'; ce_s:='1'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"5" =>    ca_s:='0'; cb_s:='1'; cc_s:='0'; cd_s:='0'; ce_s:='1'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"6" =>    ca_s:='0'; cb_s:='1'; cc_s:='0'; cd_s:='0'; ce_s:='0'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"7" =>    ca_s:='0'; cb_s:='0'; cc_s:='0'; cd_s:='1'; ce_s:='1'; cf_s:='1'; cg_s:='1'; dp_s:='1';
+            when x"8" =>    ca_s:='0'; cb_s:='0'; cc_s:='0'; cd_s:='0'; ce_s:='0'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"9" =>    ca_s:='0'; cb_s:='0'; cc_s:='0'; cd_s:='0'; ce_s:='1'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"A" =>    ca_s:='0'; cb_s:='0'; cc_s:='0'; cd_s:='1'; ce_s:='0'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"B" =>    ca_s:='1'; cb_s:='1'; cc_s:='0'; cd_s:='0'; ce_s:='0'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"C" =>    ca_s:='0'; cb_s:='1'; cc_s:='1'; cd_s:='0'; ce_s:='0'; cf_s:='0'; cg_s:='1'; dp_s:='1';
+            when x"D" =>    ca_s:='1'; cb_s:='0'; cc_s:='0'; cd_s:='0'; ce_s:='0'; cf_s:='1'; cg_s:='0'; dp_s:='1';
+            when x"E" =>    ca_s:='0'; cb_s:='1'; cc_s:='1'; cd_s:='0'; ce_s:='0'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when x"F" =>    ca_s:='0'; cb_s:='1'; cc_s:='1'; cd_s:='1'; ce_s:='0'; cf_s:='0'; cg_s:='0'; dp_s:='1';
+            when others =>  ca_s:='1'; cb_s:='1'; cc_s:='1'; cd_s:='1'; ce_s:='1'; cf_s:='1'; cg_s:='1'; dp_s:='1';
         end case;
+
+        -- Hard-assign explicit indices to match your UCF configuration perfectly:
+        seg(0) <= ca_s;
+        seg(1) <= cb_s;
+        seg(2) <= cc_s;
+        seg(3) <= cd_s;
+        seg(4) <= ce_s;
+        seg(5) <= cf_s;
+        seg(6) <= cg_s;
+        seg(7) <= dp_s;
     end process;
 
 end Behavioral;
